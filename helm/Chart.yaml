@@ -1,0 +1,4 @@
+apiVersion: v2
+name: simple-app
+description: A simple frontend-backend app
+version: 0.1.0

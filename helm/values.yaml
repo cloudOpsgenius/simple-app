@@ -1,0 +1,11 @@
+frontend:
+  image: cloudopsgenius/frontend:latest
+  port: 80
+
+backend:
+  image: cloudopsgenius/backend:latest
+  port: 5000
+
+ingress:
+  enabled: true
+  host: simple.local
