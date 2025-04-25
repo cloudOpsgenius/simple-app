@@ -13,18 +13,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Create .kube directory
-        run: mkdir -p $HOME/.kube
-
       - name: Set up Kubeconfig
         run: |
+          mkdir -p $HOME/.kube
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
       - name: Set up Helm
         uses: azure/setup-helm@v3
+        with:
+          version: v3.14.0 # Optional: specify a Helm version
 
-      - name: Helm Deploy
+      - name: Update Helm dependencies (if needed)
+        run: helm dependency update ./charts/simple-app
+
+      - name: Deploy with Helm
         run: |
-          helm upgrade --install ${{ secrets.HELM_RELEASE_NAME }} ./charts/simple-app --namespace ${{ secrets.NAMESPACE }} --create-namespace
-
-
+          helm upgrade --install ${{ secrets.HELM_RELEASE_NAME }} ./charts/simple-app \
+            --namespace ${{ secrets.NAMESPACE }} \
+            --create-namespace \
+            -f ./charts/simple-app/values.yaml
