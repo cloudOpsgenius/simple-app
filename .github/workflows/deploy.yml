@@ -23,3 +23,5 @@ jobs:
       - name: Helm Deploy
         run: |
           helm upgrade --install ${{ secrets.HELM_RELEASE_NAME }} ./charts/simple-app --namespace ${{ secrets.NAMESPACE }} --create-namespace
+
+          
