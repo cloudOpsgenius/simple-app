@@ -23,12 +23,12 @@ jobs:
         with:
           version: v3.14.0 # Optional: specify a Helm version
 
-      - name: Update Helm dependencies (if needed)
-        run: helm dependency update ./charts/simple-app
-
-      - name: Deploy with Helm
+      - name: Helm dependency update
+        run: helm dependency update ./helm
+  
+      - name: Helm Deploy
         run: |
-          helm upgrade --install ${{ secrets.HELM_RELEASE_NAME }} ./charts/simple-app \
-            --namespace ${{ secrets.NAMESPACE }} \
-            --create-namespace \
-            -f ./charts/simple-app/values.yaml
+            helm upgrade --install ${{ secrets.HELM_RELEASE_NAME }} ./helm \
+              --namespace ${{ secrets.NAMESPACE }} \
+              --create-namespace
+  
